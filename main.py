@@ -11,11 +11,25 @@ def jaccard_similarity(set_org,set_add):
 def document_similarity(file_processor):
     path_org = file_processor.file_paths[0]
     path_add = file_processor.file_paths[1]
-    org_set = file_processor.paths_ngram_pairs[path_org]
-    add_set = file_processor.paths_ngram_pairs[path_add]
+
+    org_content = file_processor.paths_contents_pairs[path_org]
+    add_content = file_processor.paths_normalized_pairs[path_add]
+
+    #获取两个文档的2-gram
+    org_set_2 = file_processor.paths_ngram_pairs_2[path_org]
+    add_set_2 = file_processor.paths_ngram_pairs_2[path_add]
+
+    #获取两个文件的3_gram
+    org_set_3 = file_processor.paths_ngram_pairs_3[path_org]
+    add_set_3 = file_processor.paths_ngram_pairs_3[path_add]
+
+    #混合2-gram和3-gram计算相似度,短文本只使用2_gram快速检查
+    two_gram_jaccard = jaccard_similarity(org_set_2, add_set_2)
+    three_gram_jaccard = jaccard_similarity(org_set_3, add_set_3) if (len(org_content) <=1000 or len(add_content) <=1000) else 0.0
+    result = (two_gram_jaccard * 0.4 + three_gram_jaccard * 0.6)
 
     #向答案文件中写入结果
-    answer = '二者的重复度为:' +(str( jaccard_similarity(org_set,add_set).__round__(2)))+'\n'
+    answer = '二者的重复度为:' +(str(result.__round__(2)))+'\n'
     fp.file_write(file_processor.file_paths[2], str(answer))
 
 def main():

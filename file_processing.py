@@ -102,11 +102,14 @@ class FileProcessor:
         self.file_paths = file_paths
         self.paths_contents_pairs = {}
         self.paths_normalized_pairs = {}
-        self.paths_ngram_pairs = {}
-        self.paths_ngram_pairs = {}
+        self.paths_ngram_pairs_2 = {}
+        self.paths_ngram_pairs_3 = {}
 
-        for path in self.file_paths[0:2] :
+        for path in self.file_paths[0:2]:
             self.paths_contents_pairs[path] = file_read(path)
+            self.paths_normalized_pairs[path] = file_normalize(self.paths_contents_pairs[path])
+            self.paths_ngram_pairs_2[path] = generate_ngram(self.paths_normalized_pairs[path], 2)
+            self.paths_ngram_pairs_3[path] = generate_ngram(self.paths_normalized_pairs[path], 3)
 
 if __name__ == '__main__':
     org_file, org_add_file, answer_file = fi.read_file_from_args()
