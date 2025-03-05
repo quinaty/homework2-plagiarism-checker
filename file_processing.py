@@ -107,3 +107,15 @@ class FileProcessor:
 
         for path in self.file_paths[0:2] :
             self.paths_contents_pairs[path] = file_read(path)
+
+if __name__ == '__main__':
+    org_file, org_add_file, answer_file = fi.read_file_from_args()
+    file_processor = FileProcessor([org_file, org_add_file, answer_file])
+    for content in file_processor.paths_contents_pairs.values():
+        print(content,end='\n\n')
+
+    for normalized_text in file_processor.paths_normalized_pairs.values():
+        print(normalized_text,end='\n\n')
+
+    for ngram in file_processor.paths_ngram_pairs.values():
+        print(ngram,end='\n\n')
