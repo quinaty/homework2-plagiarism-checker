@@ -38,8 +38,40 @@ def file_write(file_path, data):
         print(f"写入文件时发生未知错误：{str(e)}")
 
 
+#初步清洗数据
+def file_normalize(data):
+    # 去除非中文、英文、数字和空格
+    normalized_data = re.sub(r'[^\u4e00-\u9fa5a-zA-Z0-9\s]', '', data)
+    # 去除多余空格
+    normalized_data = re.sub(r'\s+','', normalized_data)
+    return split_chinese_english_number(normalized_data.strip().split())
+
+# 切分中文、英文、数字
+def split_chinese_english_number(sub_normalized_text):
+    result = []
+    for text in sub_normalized_text:
+        sub_result = re.findall(r'[\u4e00-\u9fa5]+|[a-zA-Z]+|[0-9]+', text)
+        result.extend(sub_result)
+    return result
 
 
+# 判断是否为纯中文
+def is_chinese(word):
+    __is_chinese = True
+    for char in word:
+        if '\u4e00' > char or char > '\u9fa5':
+            __is_chinese = False
+            break
+    return __is_chinese
+
+# 判断是否为纯英文
+def is_english(word):
+    __is_english = True
+    for char in word:
+        if ('a' > char or char > 'z') or ('A' > char or char > 'Z'):
+            __is_english = False
+            break
+    return __is_english
 
 
 class FileProcessor:
