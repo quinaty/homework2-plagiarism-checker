@@ -144,7 +144,7 @@ class TestTextSimilarity(unittest.TestCase):
             f.write('a')
 
         fp = FileProcessor([test_path])
-        self.assertEqual(fp.paths_ngram_pairs[test_path], set())
+        self.assertEqual(fp.paths_ngram_pairs_3[test_path], set())
 
 
 if __name__ == '__main__':
