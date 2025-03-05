@@ -73,6 +73,29 @@ def is_english(word):
             break
     return __is_english
 
+#将中文分割成字，英文、数字不分割
+def text_split(normalized_text):
+    split_text = []
+    for word in normalized_text:
+        if is_chinese(word):
+            for char in word:
+                split_text.append(char)
+        else :
+            split_text.append(word)
+
+    return split_text
+
+
+# 生成n-gram
+def generate_ngram(phase, n):
+    ngram_list = set()
+    phase = text_split(phase)
+    #print(phase)
+    for i in range(len(phase) - n + 1):
+        ngram_list.add(' '.join(phase[i:i+n]))
+    return ngram_list
+
+
 
 class FileProcessor:
     def __init__(self, file_paths):
