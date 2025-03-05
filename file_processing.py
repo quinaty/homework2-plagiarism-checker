@@ -120,5 +120,5 @@ if __name__ == '__main__':
     for normalized_text in file_processor.paths_normalized_pairs.values():
         print(normalized_text,end='\n\n')
 
-    for ngram in file_processor.paths_ngram_pairs.values():
+    for ngram in file_processor.paths_ngram_pairs_3.values():
         print(ngram,end='\n\n')

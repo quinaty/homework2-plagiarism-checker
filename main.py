@@ -1,5 +1,9 @@
 import file_input as fi
 import file_processing as fp
+import cProfile
+
+profile = cProfile.Profile()
+profile.enable()
 
 #计算两个集合的jaccard相似度
 def jaccard_similarity(set_org,set_add):
@@ -43,5 +47,9 @@ def main():
     print(fp.file_read(file_processor.file_paths[2]),end='\n\n')
 
 
+
+
 if __name__ == '__main__':
     main()
+    profile.disable()
+    profile.dump_stats('profile.prof')
